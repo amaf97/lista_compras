@@ -42,20 +42,21 @@ header p {
   margin-bottom: 30px;
 }
 
+/* ===== LAYOUT DO FORMULÁRIO COM CSS GRID ===== */
 .form-group {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
+  display: grid; /* Define o container como grid */
+  grid-template-columns: 1fr 1fr auto; /* 3 colunas: nome (1fr), quantidade (1fr), botão (auto) */
+  gap: 15px; /* Espaçamento entre os elementos do grid */
+  align-items: center; /* Alinha verticalmente os elementos */
 }
 
 input[type="text"], input[type="number"] {
-  flex: 1;
-  min-width: 200px;
   padding: 15px;
   border: 2px solid #e1e5e9;
   border-radius: 10px;
   font-size: 16px;
   transition: border-color 0.3s ease;
+  min-width: 0; /* Permite que o input se encolha no grid */
 }
 
 input[type="text"]:focus, input[type="number"]:focus {
@@ -73,6 +74,7 @@ input[type="text"]:focus, input[type="number"]:focus {
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap; /* Evita quebra de linha no botão */
 }
 
 .btn-add:hover {
@@ -94,9 +96,13 @@ input[type="text"]:focus, input[type="number"]:focus {
   font-size: 1.5rem;
 }
 
+/* ===== LAYOUT DOS ITENS DA LISTA COM CSS GRID ===== */
 .item {
-  display: flex;
-  align-items: center;
+  display: grid; /* Define cada item como um grid container */
+  grid-template-columns: auto 1fr auto auto; /* 4 colunas: quantidade (auto), info (1fr), espaço (auto), botão (auto) */
+  grid-template-areas: "quantity info remove"; /* Define áreas nomeadas para melhor organização */
+  align-items: center; /* Alinha verticalmente os elementos */
+  gap: 20px; /* Espaçamento entre os elementos do grid */
   padding: 20px;
   background: #f8f9fa;
   border-radius: 10px;
@@ -111,7 +117,7 @@ input[type="text"]:focus, input[type="number"]:focus {
 }
 
 .item-info {
-  flex: 1;
+  grid-area: info; /* Posiciona na área "info" definida no grid-template-areas */
 }
 
 .item-name {
@@ -127,15 +133,17 @@ input[type="text"]:focus, input[type="number"]:focus {
 }
 
 .item-quantity {
+  grid-area: quantity; /* Posiciona na área "quantity" definida no grid-template-areas */
   background: #667eea;
   color: white;
   padding: 8px 15px;
   border-radius: 20px;
   font-weight: 600;
-  margin-right: 20px;
+  justify-self: start; /* Alinha à esquerda dentro da área do grid */
 }
 
 .btn-remove {
+  grid-area: remove; /* Posiciona na área "remove" definida no grid-template-areas */
   background: #dc3545;
   color: white;
   border: none;
@@ -144,6 +152,7 @@ input[type="text"]:focus, input[type="number"]:focus {
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s ease;
+  justify-self: end; /* Alinha à direita dentro da área do grid */
 }
 
 .btn-remove:hover {
@@ -157,11 +166,12 @@ input[type="text"]:focus, input[type="number"]:focus {
   font-style: italic;
 }
 
+/* ===== LAYOUT DAS ESTATÍSTICAS COM CSS GRID ===== */
 .stats {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
+  display: grid; /* Define o container como grid */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Colunas responsivas que se ajustam automaticamente */
+  gap: 40px; /* Espaçamento entre os elementos do grid */
+  justify-items: center; /* Centraliza os itens horizontalmente */
 }
 
 .stat-item {
@@ -170,7 +180,8 @@ input[type="text"]:focus, input[type="number"]:focus {
   border-radius: 15px;
   text-align: center;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  min-width: 150px;
+  width: 100%; /* Ocupa toda a largura da coluna do grid */
+  max-width: 200px; /* Limita a largura máxima */
 }
 
 .stat-number {
@@ -186,31 +197,56 @@ input[type="text"]:focus, input[type="number"]:focus {
   font-size: 0.9rem;
 }
 
+/* ===== MEDIA QUERIES COM CSS GRID RESPONSIVO ===== */
 @media (max-width: 768px) {
   .container {
       padding: 15px;
   }
   
+  /* Layout do formulário em coluna única para mobile */
   .form-group {
-      flex-direction: column;
+      grid-template-columns: 1fr; /* Uma coluna única */
+      grid-template-areas: /* Define áreas específicas para mobile */
+          "name"
+          "quantity"
+          "add";
   }
   
-  input[type="text"], input[type="number"] {
-      min-width: auto;
+  input[type="text"] {
+      grid-area: name; /* Posiciona na área "name" */
   }
   
+  input[type="number"] {
+      grid-area: quantity; /* Posiciona na área "quantity" */
+  }
+  
+  .btn-add {
+      grid-area: add; /* Posiciona na área "add" */
+      justify-self: center; /* Centraliza o botão */
+  }
+  
+  /* Layout dos itens em coluna única para mobile */
   .item {
-      flex-direction: column;
+      grid-template-columns: 1fr; /* Uma coluna única */
+      grid-template-areas: /* Define áreas específicas para mobile */
+          "info"
+          "quantity"
+          "remove";
       text-align: center;
       gap: 15px;
   }
   
   .item-quantity {
-      margin-right: 0;
-      margin-bottom: 10px;
+      justify-self: center; /* Centraliza a quantidade */
   }
   
+  .btn-remove {
+      justify-self: center; /* Centraliza o botão de remover */
+  }
+  
+  /* Layout das estatísticas em coluna única para mobile */
   .stats {
       gap: 20px;
+      grid-template-columns: 1fr; /* Uma coluna única */
   }
 }
