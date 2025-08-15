@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras</title>
+    <link rel="stylesheet" href="estilo.css>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Lista de Compras</h1>
+            <p>Organize as suas compras de forma simples e eficiente</p>
+        </header>
+
+        <div class="input-section">
+            <form id="shopping-form">
+                <div class="form-group">
+                    <input type="text" id="product-name" placeholder="Nome do produto" required>
+                    <input type="number" id="product-quantity" placeholder="Quantidade" min="1" value="1" required>
+                    <button type="submit" class="btn-add">Adicionar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="shopping-list">
+            <h2>Itens a comprar</h2>
+            <div id="items-container">
+                <!-- Os itens serão inseridos aqui dinamicamente -->
+            </div>
+            <div id="empty-message" class="empty-message">
+                <p>Nenhum item na lista. Adicione o primeiro produto!</p>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number" id="total-items">0</span>
+                <span class="stat-label">Itens</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="total-quantity">0</span>
+                <span class="stat-label">Quantidade Total</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/script_1.js"></script>
+</body>
+</html>
